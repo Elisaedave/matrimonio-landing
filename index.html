@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Elisa &amp; Davide si sposano</title>
+  <meta name="description" content="Elisa e Davide si sposano. Tutti i dettagli e la conferma di presenza.">
+  <meta name="theme-color" content="#f8f1e8">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preload" href="fonts/pinyon-script.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="chiuso">
+
+  <!-- 0 · APERTURA: sigillo di cera, i quattro lembi della busta si aprono sul sito -->
+  <div id="busta" class="busta" role="dialog" aria-label="Invito di nozze">
+    <div class="busta__lembo lembo--su"><i></i></div>
+    <div class="busta__lembo lembo--giu"><i></i></div>
+    <div class="busta__lembo lembo--sx"><i></i></div>
+    <div class="busta__lembo lembo--dx"><i></i></div>
+
+    <button type="button" class="sigillo" id="sigillo" aria-label="Apri l'invito">
+      <svg class="sigillo__svg" viewBox="0 0 120 120" aria-hidden="true">
+        <defs>
+          <filter id="cera" x="-12%" y="-12%" width="124%" height="124%">
+            <feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="2" seed="5" result="n"/>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="9"/>
+          </filter>
+          <radialGradient id="cera-g" cx="36%" cy="30%" r="85%">
+            <stop offset="0" stop-color="#eec6bb"/>
+            <stop offset=".5" stop-color="#d4968b"/>
+            <stop offset="1" stop-color="#a9675f"/>
+          </radialGradient>
+          <linearGradient id="cuore-g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#dba99f"/>
+            <stop offset="1" stop-color="#b97b72"/>
+          </linearGradient>
+        </defs>
+        <g filter="url(#cera)"><circle cx="60" cy="60" r="50" fill="url(#cera-g)"/></g>
+        <circle cx="60" cy="60" r="39" fill="none" stroke="rgba(80,35,30,.28)" stroke-width="2.2"/>
+        <circle cx="60" cy="60" r="41" fill="none" stroke="rgba(255,255,255,.32)" stroke-width="1.6"/>
+        <path d="M60 85 C33 67 29 46 44 38 C52 34 58 38 60 44 C62 38 68 34 76 38 C91 46 87 67 60 85Z" transform="translate(1.6 1.8)" fill="rgba(80,35,30,.45)"/>
+        <path d="M60 85 C33 67 29 46 44 38 C52 34 58 38 60 44 C62 38 68 34 76 38 C91 46 87 67 60 85Z" transform="translate(-1.1 -1.2)" fill="rgba(255,255,255,.5)"/>
+        <path d="M60 85 C33 67 29 46 44 38 C52 34 58 38 60 44 C62 38 68 34 76 38 C91 46 87 67 60 85Z" fill="url(#cuore-g)"/>
+      </svg>
+      <span class="sigillo__testo">Tocca per aprire</span>
+    </button>
+  </div>
+
+  <main id="sito">
+
+    <!-- 1 · TAG (hero) -->
+    <section id="tag" class="tag" aria-labelledby="titolo-nomi">
+      <div class="tag__scena">
+        <img class="tag__calla" src="assets/calla.webp" alt="" width="600" height="900">
+        <div class="carta tag__carta">
+          <img class="tag__occhiello" src="assets/occhiello.webp" alt="" width="86" height="86">
+          <h1 id="titolo-nomi" class="tag__nomi">
+            <img class="nomi" src="assets/nome-elisa-davide.svg" alt="Elisa e Davide" width="372" height="120">
+          </h1>
+          <p class="tag__sposano">si sposano</p>
+          <img class="tag__villa" src="assets/villa-mattioli.webp" alt="Acquarello di Villa Mattioli" width="1486" height="820">
+          <p class="tag__scorri">Scorri</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1b · LETTERA (esce dalla busta quando ci arrivi) -->
+    <section id="lettera" class="sezione lettera" aria-label="Un messaggio per te">
+      <div class="env" id="env">
+        <div class="env__retro"></div>
+
+        <div class="env__guida">
+          <svg class="env__cuori" viewBox="0 0 120 70" aria-hidden="true">
+            <path d="M40 58 C14 40 6 22 20 12 C30 5 40 12 42 20 C46 8 62 6 68 18 C74 32 56 46 40 58Z" />
+            <path d="M82 52 C68 42 64 32 71 26 C77 21 83 25 84 30 C87 23 96 23 99 30 C102 38 92 46 82 52Z" />
+          </svg>
+          <div class="env__lettera">
+            <div class="env__testo">
+              <p class="env__saluto">Cari amici e famiglia,</p>
+              <p>Mentre ci prepariamo a dire «sì», siamo grati per le persone meravigliose che ci stanno accanto. Saremmo onorati di avervi con noi all'inizio della nostra vita insieme.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="env__fronte"><div class="env__fronte-forma">
+          <img class="env__nome" src="assets/nome-elisa-davide.svg" alt="" width="240" height="77">
+        </div></div>
+        <div class="env__aletta"></div>
+      </div>
+    </section>
+
+    <!-- 2 · LA DATA (gratta e vinci) -->
+    <section id="data" class="sezione data" aria-labelledby="titolo-data">
+      <h2 id="titolo-data" class="titolo corsivo">La data</h2>
+      <p class="sottotitolo gratta__invito" id="gratta-invito">✦ Gratta per scoprire la data ✦</p>
+
+      <div class="gratta" id="gratta">
+        <div class="gratta__colonna">
+          <div class="gratta__cella"><span class="gratta__num">28</span><canvas aria-hidden="true"></canvas></div>
+          <span class="gratta__etichetta">Giorno</span>
+        </div>
+        <div class="gratta__colonna">
+          <div class="gratta__cella"><span class="gratta__num gratta__num--testo">Maggio</span><canvas aria-hidden="true"></canvas></div>
+          <span class="gratta__etichetta">Mese</span>
+        </div>
+        <div class="gratta__colonna">
+          <div class="gratta__cella"><span class="gratta__num">2027</span><canvas aria-hidden="true"></canvas></div>
+          <span class="gratta__etichetta">Anno</span>
+        </div>
+      </div>
+
+      <p class="data__dopo" id="data-dopo" hidden>Venerdì 28 Maggio 2027, ore 11:00</p>
+      <p class="data__aiuto"><button type="button" class="link link--bottone" id="mostra-data">Mostra la data</button></p>
+    </section>
+
+    <!-- 3 · INVITO + DOVE -->
+    <section id="invito" class="sezione invito" aria-labelledby="titolo-invito">
+      <div class="carta carta--larga">
+        <h2 id="titolo-invito" class="occhiello">Sono lieti di invitarti al nostro matrimonio</h2>
+        <p class="invito__quando"><strong>Venerdì 28 Maggio 2027, ore 11:00</strong></p>
+
+        <div class="luogo">
+          <h3 class="corsivo">Chiesa di Santa Maria Assunta</h3>
+          <p>Via Nobili Calvi, 2, Montesolaro (CO)</p>
+          <p class="azioni">
+            <a class="link" data-mappa="chiesa" href="#" target="_blank" rel="noopener">Google Maps</a>
+            <span aria-hidden="true">·</span>
+            <a class="link" data-mappa-apple="chiesa" href="#" target="_blank" rel="noopener">Apple Maps</a>
+          </p>
+        </div>
+
+        <p class="invito__seguira">Seguirà il ricevimento presso</p>
+
+        <div class="luogo">
+          <h3 class="corsivo">Villa Mattioli</h3>
+          <p>Via Rapazzini, 2, 20855 Lesmo (MB)</p>
+          <p class="azioni">
+            <a class="link" data-mappa="villa" href="#" target="_blank" rel="noopener">Google Maps</a>
+            <span aria-hidden="true">·</span>
+            <a class="link" data-mappa-apple="villa" href="#" target="_blank" rel="noopener">Apple Maps</a>
+          </p>
+        </div>
+
+        <div class="calendario">
+          <p class="calendario__titolo">Salva la data</p>
+          <p class="azioni">
+            <a class="bottone bottone--chiaro" id="cal-google" href="#" target="_blank" rel="noopener">Google Calendar</a>
+            <a class="bottone bottone--chiaro" id="cal-ics" href="#" download="elisa-e-davide.ics">Apple / Outlook</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · PROGRAMMA -->
+    <section id="programma" class="sezione programma" aria-labelledby="titolo-programma">
+      <h2 id="titolo-programma" class="titolo corsivo">La giornata</h2>
+      <ol class="tempo">
+        <li class="tempo__voce">
+          <span class="tempo__ora">11:00</span>
+          <div>
+            <h3>Cerimonia</h3>
+            <p>Chiesa di Santa Maria Assunta, Montesolaro</p>
+          </div>
+        </li>
+        <li class="tempo__voce tempo__voce--dopo">
+          <span class="tempo__ora">A seguire</span>
+          <div>
+            <h3>Ricevimento</h3>
+            <p>Villa Mattioli, Lesmo</p>
+            <p class="tempo__nota">Gli orari della festa arriveranno presto.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- 5 · VIAGGIO DI NOZZE -->
+    <section id="viaggio" class="sezione viaggio" aria-labelledby="titolo-viaggio">
+      <h2 id="titolo-viaggio" class="titolo corsivo">Il nostro viaggio di nozze</h2>
+      <p class="sottotitolo">Nuova Zelanda e Polinesia Francese</p>
+
+      <div class="mappa" id="mappa" aria-label="Mappa del viaggio di nozze: Milano, Singapore, Christchurch, Auckland, Bora Bora, Sydney e ritorno a Milano" role="img">
+        <div class="mappa__scroll" id="mappa-scroll">
+          <div class="mappa__tela" id="mappa-tela">
+            <svg class="mappa__svg" id="mappa-svg" viewBox="0 0 1000 540" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
+            <div class="mappa__badge" id="mappa-badge" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+      <p class="mappa__nota">Scorri la mappa con il dito</p>
+
+      <ol class="tappe" id="tappe">
+        <!-- generato da js/map.js -->
+      </ol>
+      <p class="viaggio__replay"><button type="button" class="link link--bottone" id="rivedi">Rivedi il volo</button></p>
+
+      <div class="regalo">
+        <p>Per chi desiderasse contribuire alla nostra luna di miele</p>
+        <a class="bottone bottone--pieno" id="bottone-agenzia" href="#" target="_blank" rel="noopener">Contribuisci</a>
+        <p class="regalo__nota" id="nota-agenzia" hidden>Il collegamento arriverà a breve.</p>
+      </div>
+    </section>
+
+    <!-- 6 · RSVP -->
+    <section id="rsvp" class="sezione rsvp" aria-labelledby="titolo-rsvp">
+      <h2 id="titolo-rsvp" class="titolo corsivo">Ci sarai?</h2>
+      <p class="sottotitolo">Confermaci la tua presenza: ci aiuta a organizzare tutto con cura.</p>
+
+      <div class="striscia" aria-hidden="true">
+        <img src="assets/foto-1.webp" alt="" loading="lazy" width="760" height="812">
+        <img src="assets/foto-2.webp" alt="" loading="lazy" width="760" height="812">
+        <img src="assets/foto-3.webp" alt="" loading="lazy" width="760" height="776">
+      </div>
+
+      <form class="carta carta--larga modulo" id="modulo" novalidate>
+        <p class="prova" id="prova" hidden>Modulo in prova: non è ancora collegato al foglio e le risposte non vengono salvate.</p>
+
+        <div class="campo">
+          <label for="nome">Nome e cognome</label>
+          <input id="nome" name="nome" type="text" autocomplete="name" required placeholder="Come ti chiami?">
+        </div>
+
+        <fieldset class="campo scelta">
+          <legend>La tua risposta</legend>
+          <label class="scelta__voce"><input type="radio" name="presenza" value="si" required><span>Sì, ci sarò</span></label>
+          <label class="scelta__voce"><input type="radio" name="presenza" value="no"><span>Purtroppo non posso</span></label>
+        </fieldset>
+
+        <div id="dettagli" class="dettagli" hidden>
+          <div class="campo">
+            <label for="persone">Quante persone siete, te compreso?</label>
+            <select id="persone" name="persone">
+              <option>1</option><option>2</option><option>3</option>
+              <option>4</option><option>5</option><option>6</option>
+            </select>
+          </div>
+          <div class="campo" id="campo-ospiti" hidden>
+            <label for="ospiti">Nomi di chi viene con te</label>
+            <textarea id="ospiti" name="ospiti" rows="2" placeholder="Nome e cognome, uno per riga"></textarea>
+          </div>
+          <div class="campo">
+            <label for="intolleranze">Intolleranze o allergie alimentari</label>
+            <textarea id="intolleranze" name="intolleranze" rows="3" placeholder="Per te e per chi viene con te. Se non ce ne sono, lascia vuoto."></textarea>
+          </div>
+          <div class="campo">
+            <label for="canzone">Una canzone che ti fa ballare</label>
+            <input id="canzone" name="canzone" type="text" placeholder="Titolo e artista">
+          </div>
+        </div>
+
+        <input class="trappola" type="text" name="sito_web" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <button class="bottone bottone--pieno" type="submit" id="invia">Invia risposta</button>
+        <p class="modulo__esito" id="esito" role="status" aria-live="polite"></p>
+        <p class="modulo__privacy">Usiamo queste informazioni solo per organizzare il giorno del matrimonio. Le leggono soltanto Elisa e Davide.</p>
+      </form>
+    </section>
+
+    <!-- 7 · ALBUM (compare dopo il matrimonio) -->
+    <section id="album" class="sezione album" aria-labelledby="titolo-album" hidden>
+      <h2 id="titolo-album" class="titolo corsivo">Le vostre foto</h2>
+      <p class="sottotitolo">Grazie per aver condiviso questo giorno con noi. Aggiungi qui i tuoi scatti.</p>
+      <p><a class="bottone bottone--pieno" id="bottone-album" href="#" target="_blank" rel="noopener">Apri l'album condiviso</a></p>
+    </section>
+
+    <!-- 8 · CHIUSURA -->
+    <footer class="chiusura">
+      <img class="nomi nomi--piccoli" src="assets/nome-elisa-davide.svg" alt="Elisa e Davide" width="240" height="77">
+      <p>28 · 05 · 2027</p>
+    </footer>
+
+  </main>
+
+  <div class="petali" id="petali" aria-hidden="true"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/map-data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/gratta.js"></script>
+  <script src="js/map.js"></script>
+</body>
+</html>

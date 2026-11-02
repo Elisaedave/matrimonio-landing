@@ -1,0 +1,9 @@
+# Materiali di lavoro: non vanno online
+_estratti/
+*.pdf
+Screenshot*.png
+IMG_*.PNG
+IMG_*.png
+tools/node_modules/
+.claude/
+.vercel/
