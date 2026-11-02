@@ -14,8 +14,8 @@ Sito statico (HTML, CSS, JavaScript, nessuna dipendenza). Si pubblica su Vercel 
 1. **RSVP:** segui `apps-script/README.md`, poi incolla l'indirizzo in `rsvpEndpoint`.
 2. **Luna di miele:** incolla il link dell'agenzia in `agenziaUrl`. Finché è vuoto il bottone resta spento.
 3. **Album foto:** incolla il link in `albumUrl`. La sezione compare dal 28 maggio 2027 (anteprima con `?album`).
-4. **Anteprima su WhatsApp:** quando il dominio è definitivo, in `index.html` aggiungi
-   `<meta property="og:image" content="https://TUO-DOMINIO/assets/og.jpg">` (l'immagine è già pronta).
+4. **Anteprima su WhatsApp:** `index.html` punta a `https://matrimonio-landing.vercel.app/assets/og.jpg`.
+   Se cambi dominio, aggiorna `og:url` e `og:image` nell'`<head>`.
 5. **Orari della festa:** nella sezione `#programma` di `index.html`.
 
 ## Prove in locale
