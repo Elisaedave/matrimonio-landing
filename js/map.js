@@ -15,7 +15,6 @@
   var badge = document.getElementById("mappa-badge");
   var lista = document.getElementById("tappe");
   var rivedi = document.getElementById("rivedi");
-  var ridotto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function el(nome, attr, padre) {
     var n = document.createElementNS(NS, nome);
@@ -115,8 +114,13 @@
     bersaglio = Math.max(0, Math.min(extra, bersaglio));
     scorrevole.scrollLeft += (bersaglio - scorrevole.scrollLeft) * 0.12;
   }
+  var ripresa = 0;
   ["touchstart", "wheel", "pointerdown"].forEach(function (ev) {
-    scorrevole.addEventListener(ev, function () { seguire = false; }, { passive: true });
+    scorrevole.addEventListener(ev, function () {
+      seguire = false;
+      clearTimeout(ripresa);
+      ripresa = setTimeout(function () { seguire = true; }, 2500);
+    }, { passive: true });
   });
 
   // requestAnimationFrame, con un timer di riserva se il browser lo sospende (scheda in secondo piano).
@@ -132,11 +136,13 @@
       var p = volati[i];
       var L = p._L;
       var durata = Math.max(1100, Math.min(2600, L * 4.6));
-      var t0 = null;
+      var x = 0;
+      var ultimo = null;
       function passo(t) {
         if (id !== corsa) return ok(false);
-        if (t0 === null) t0 = t;
-        var x = Math.min((t - t0) / durata, 1);
+        var dt = ultimo === null ? 0 : Math.min(t - ultimo, 100); // un tick lungo non fa saltare l'aereo
+        ultimo = t;
+        if (inVista) x = Math.min(x + dt / durata, 1);
         var e = x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; // ease in-out
         var l = e * L;
         var a = p.getPointAtLength(l);
@@ -157,7 +163,6 @@
     seguire = true;
     scorrevole.scrollLeft = 0;
     var id = corsa;
-    if (ridotto) { mostraTutto(); return; }
     aereo.classList.add("attivo");
     var p0 = volati[0].getPointAtLength(0);
     aereo.setAttribute("transform", "translate(" + p0.x + " " + p0.y + ") scale(" + aereo._k + ")");
@@ -175,14 +180,17 @@
   window.addEventListener("resize", scalaAereo);
   scalaAereo();
 
-  // parte da sola quando la mappa entra nello schermo
-  if ("IntersectionObserver" in window && !ridotto) {
-    var visto = false;
-    new IntersectionObserver(function (voci, obs) {
+  // Parte da sola quando la mappa entra nello schermo, e si ferma se esce.
+  var inVista = true;
+  if ("IntersectionObserver" in window) {
+    var partito = false;
+    new IntersectionObserver(function (voci) {
       voci.forEach(function (v) {
-        if (v.isIntersecting && !visto) { visto = true; obs.disconnect(); parti(); }
+        inVista = v.intersectionRatio > 0.15;
+        var grande = v.isIntersecting && v.intersectionRect.height >= window.innerHeight * 0.8; // mappa più alta dello schermo
+        if (!partito && (v.intersectionRatio >= 0.45 || grande)) { partito = true; parti(); }
       });
-    }, { threshold: 0.45 }).observe(contenitore);
+    }, { threshold: [0, 0.15, 0.45, 0.8] }).observe(contenitore);
   } else {
     mostraTutto();
   }
