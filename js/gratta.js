@@ -7,7 +7,6 @@
 
   var dopo = document.getElementById("data-dopo");
   var scoperte = 0;
-  var ridotto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function stella(ctx, x, y, r) {
     ctx.beginPath();
@@ -99,6 +98,7 @@
 
     canvas.addEventListener("pointerdown", function (e) {
       giu = true;
+      cella._toccata = true;
       try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* puntatore già rilasciato: si prosegue senza */ }
       var r = canvas.getBoundingClientRect();
       ux = e.clientX - r.left; uy = e.clientY - r.top;
@@ -115,11 +115,16 @@
     canvas.addEventListener("pointercancel", fine);
 
     cella._scopri = function () { scopri(cella, canvas); };
+
+    if ("ResizeObserver" in window) {
+      new ResizeObserver(function () {
+        if (!cella._toccata && !cella._scoperta) ctx = disegna(canvas);
+      }).observe(canvas);
+    }
   });
 
   document.getElementById("mostra-data").addEventListener("click", function () {
     celle.forEach(function (c) { c._scopri(); });
   });
 
-  if (ridotto) celle.forEach(function (c) { c._scopri(); });
 })();
