@@ -6,6 +6,7 @@
 @font-face { font-family: "Bodoni Moda"; src: url("../fonts/bodoni-moda.woff2") format("woff2"); font-weight: 400 500; font-display: swap; }
 
 :root {
+  color-scheme: light;
   --carta: #f8f1e8;
   --carta-2: #f2e6da;
   --rosa-chiaro: #f7e6e0;

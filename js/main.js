@@ -201,6 +201,7 @@
       campoOspiti.hidden = true;
       messaggio(si ? "Grazie! Ti aspettiamo il 28 maggio." : "Ci mancherai. Grazie di avercelo detto.", "ok");
       if (si) window.petali(40);
+      setTimeout(function () { invia.disabled = false; }, 4000); // per chi risponde anche per un altro invitato
     }).catch(function () {
       invia.disabled = false;
       messaggio("Non siamo riusciti a inviare la risposta. Riprova tra poco.", "ko");

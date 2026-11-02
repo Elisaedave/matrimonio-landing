@@ -25,7 +25,7 @@
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(r.width * dpr);
     canvas.height = Math.round(r.height * dpr);
-    var ctx = canvas.getContext("2d");
+    var ctx = canvas.getContext("2d", { willReadFrequently: true });
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     var g = ctx.createLinearGradient(0, 0, r.width, r.height);
     g.addColorStop(0, "#f1d9d2");
