@@ -112,7 +112,9 @@
     if (!seguire || extra <= 2) return;
     var bersaglio = (x / M.w) * tela.clientWidth - scorrevole.clientWidth / 2;
     bersaglio = Math.max(0, Math.min(extra, bersaglio));
-    scorrevole.scrollLeft += (bersaglio - scorrevole.scrollLeft) * 0.12;
+    var diff = bersaglio - scorrevole.scrollLeft;
+    if (Math.abs(diff) < 1.5) return; // fascia morta: evita il tremolio per gli arrotondamenti
+    scorrevole.scrollLeft += diff * 0.12;
   }
   var ripresa = 0;
   ["touchstart", "wheel", "pointerdown"].forEach(function (ev) {
