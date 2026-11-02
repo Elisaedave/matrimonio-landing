@@ -319,6 +319,22 @@ body.aperto .tag__calla { animation: cresce 1.6s cubic-bezier(.2,.8,.2,1) .9s fo
 .campo .scelta__voce:has(input:checked) { background: var(--rosa-chiaro); border-color: var(--rosa-profondo); }
 .scelta__voce input:focus-visible { outline: 2px solid var(--rosa-profondo); outline-offset: 3px; }
 
+
+/* allergie e intolleranze: scelte rapide */
+.allergeni { margin-top: 2.2rem; }
+.allergeni legend { margin-bottom: .2rem; }
+.campo__aiuto { font-size: .9rem; color: var(--testo-2); margin-bottom: .8rem; }
+.chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+.campo .chip { display: inline-flex; margin: 0; cursor: pointer; font-size: .95rem; }
+.chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.chip span {
+  display: inline-block; padding: .6rem 1rem; border: 1.5px solid var(--rosa-scuro); border-radius: 999px;
+  background: #fffdf9; color: var(--testo); line-height: 1.2; transition: background .2s, color .2s, border-color .2s;
+}
+.chip input:checked + span { background: var(--rosa-profondo); border-color: var(--rosa-profondo); color: #fffaf5; }
+.chip input:focus-visible + span { outline: 2px solid var(--rosa-profondo); outline-offset: 3px; }
+.campo .campo__sotto { margin-top: 1.1rem; }
+
 .dettagli[hidden], [hidden] { display: none !important; }
 .dettagli { animation: entra .5s ease; }
 @keyframes entra { from { opacity: 0; transform: translateY(-6px); } }

@@ -150,12 +150,19 @@
 
   $$('input[name="presenza"]').forEach(function (r) {
     r.addEventListener("change", function () {
-      dettagliBox.hidden = form.presenza.value !== "si";
+      dettagliBox.hidden = form.presenza.value === "no"; // i dettagli si vedono finché non rispondi di no
     });
   });
   $("#persone").addEventListener("change", function () {
     campoOspiti.hidden = parseInt(this.value, 10) < 2;
   });
+
+  // Scelte rapide + testo libero in un'unica cella del foglio.
+  function intolleranze() {
+    var scelte = $$('input[name="allergeni"]:checked', form).map(function (i) { return i.value; });
+    var altro = form.intolleranze.value.trim();
+    return scelte.concat(altro ? [altro] : []).join(" · ");
+  }
 
   function messaggio(testo, tipo) {
     esito.textContent = testo;
@@ -178,7 +185,7 @@
       presenza: si ? "Sì" : "No",
       persone: si ? form.persone.value : "0",
       ospiti: si && parseInt(form.persone.value, 10) > 1 ? form.ospiti.value.trim() : "",
-      intolleranze: si ? form.intolleranze.value.trim() : "",
+      intolleranze: si ? intolleranze() : "",
       canzone: si ? form.canzone.value.trim() : "",
     };
 
@@ -197,7 +204,7 @@
       body: JSON.stringify(dati),
     }).then(function () {
       form.reset();
-      dettagliBox.hidden = true;
+      dettagliBox.hidden = false;
       campoOspiti.hidden = true;
       messaggio(si ? "Grazie! Ti aspettiamo il 28 maggio." : "Ci mancherai. Grazie di avercelo detto.", "ok");
       if (si) window.petali(40);

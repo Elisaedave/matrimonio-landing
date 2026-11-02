@@ -257,7 +257,7 @@
           <label class="scelta__voce"><input type="radio" name="presenza" value="no"><span>Purtroppo non posso</span></label>
         </fieldset>
 
-        <div id="dettagli" class="dettagli" hidden>
+        <div id="dettagli" class="dettagli">
           <div class="campo">
             <label for="persone">Quante persone siete, te compreso?</label>
             <select id="persone" name="persone">
@@ -269,10 +269,22 @@
             <label for="ospiti">Nomi di chi viene con te</label>
             <textarea id="ospiti" name="ospiti" rows="2" placeholder="Nome e cognome, uno per riga"></textarea>
           </div>
-          <div class="campo">
-            <label for="intolleranze">Intolleranze o allergie alimentari</label>
-            <textarea id="intolleranze" name="intolleranze" rows="3" placeholder="Per te e per chi viene con te. Se non ce ne sono, lascia vuoto."></textarea>
-          </div>
+          <fieldset class="campo allergeni">
+            <legend>Allergie e intolleranze alimentari</legend>
+            <p class="campo__aiuto">Tocca quelle che servono, per te e per chi viene con te. Se non ce ne sono, salta pure.</p>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="allergeni" value="Glutine"><span>Glutine</span></label>
+              <label class="chip"><input type="checkbox" name="allergeni" value="Lattosio"><span>Lattosio</span></label>
+              <label class="chip"><input type="checkbox" name="allergeni" value="Frutta a guscio"><span>Frutta a guscio</span></label>
+              <label class="chip"><input type="checkbox" name="allergeni" value="Uova"><span>Uova</span></label>
+              <label class="chip"><input type="checkbox" name="allergeni" value="Pesce e crostacei"><span>Pesce e crostacei</span></label>
+              <label class="chip"><input type="checkbox" name="allergeni" value="Soia"><span>Soia</span></label>
+              <label class="chip"><input type="checkbox" name="allergeni" value="Vegetariano"><span>Vegetariano</span></label>
+              <label class="chip"><input type="checkbox" name="allergeni" value="Vegano"><span>Vegano</span></label>
+            </div>
+            <label class="campo__sotto" for="intolleranze">Altro, o chi ha quale esigenza</label>
+            <textarea id="intolleranze" name="intolleranze" rows="3" placeholder="Es. «Marco: celiaco». Scrivi qui qualsiasi altra allergia."></textarea>
+          </fieldset>
           <div class="campo">
             <label for="canzone">Una canzone che ti fa ballare</label>
             <input id="canzone" name="canzone" type="text" placeholder="Titolo e artista">
