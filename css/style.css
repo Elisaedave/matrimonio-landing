@@ -98,7 +98,7 @@ a { color: inherit; }
 
 /* ---------- 0b · la lettera che esce dalla busta (si apre quando arrivi qui) ---------- */
 /* La busta resta ferma al centro mentre scrolli: la lettera esce (o rientra) in base a quanto hai scrollato. */
-.lettera { --w: min(76vw, 21rem); height: 230svh; padding: 0; }
+.lettera { --w: min(76vw, 21rem, 52svh); height: 230svh; padding: 0; }
 .lettera .lettera__pin { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; overflow: hidden; }
 .env { --ap: 0; --su: 0; --cu: 0; }
 .env {
@@ -347,8 +347,23 @@ body.aperto .tag__calla { animation: cresce 1.6s cubic-bezier(.2,.8,.2,1) .9s fo
 .rivela.visibile { opacity: 1; transform: none; }
 
 @media (min-width: 900px) {
-  .tag__scena { width: 26rem; }
+  .tag__scena { width: 28rem; }
+  .tag__carta { min-height: min(82svh, 46rem); }
+  .lettera { --w: min(60vw, 26rem, 52svh); }
   .mappa__tela { min-width: 0; }
+  .gratta { gap: 1.4rem; }
+  .gratta__cella { width: 10.5rem; }
+  .gratta__num { font-size: 4rem; }
+  .gratta__num--testo { font-size: 2.5rem; }
+  .carta--larga { max-width: 38rem; }
+  .striscia { max-width: 40rem; }
+}
+
+/* telefoni in orizzontale: poca altezza */
+@media (max-height: 480px) and (orientation: landscape) {
+  .tag { padding-top: 2rem; padding-bottom: 2rem; }
+  .tag__carta { min-height: 0; }
+  .sezione { padding-top: 3rem; padding-bottom: 3rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
