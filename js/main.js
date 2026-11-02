@@ -27,17 +27,34 @@
     document.body.classList.add("aperto");
   }
 
-  /* ---------- lettera: esce dalla busta quando ci arrivi ---------- */
+  /* ---------- lettera: esce dalla busta in base allo scroll, rientra se torni su ---------- */
   var env = $("#env");
-  function apriLettera() { env.classList.add("aperta"); }
-  env.addEventListener("click", apriLettera);
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function (voci, obs) {
-      voci.forEach(function (v) { if (v.isIntersecting) { apriLettera(); obs.disconnect(); } });
-    }, { threshold: 0.6 }).observe(env);
-  } else {
-    apriLettera();
+  var sezLettera = $("#lettera");
+  var ridottoLettera = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function aggiornaLettera() {
+    var r = sezLettera.getBoundingClientRect();
+    var corsa = r.height - window.innerHeight;
+    var p = ridottoLettera ? 1 : clamp(-r.top / (corsa > 0 ? corsa : 1));
+    var ap = clamp(p / 0.32);                // 1° tempo: il lembo si apre
+    var su = clamp((p - 0.22) / 0.62);       // 2° tempo: la lettera sale
+    var cu = clamp((p - 0.82) / 0.14);       // alla fine compaiono i cuori
+    env.style.setProperty("--ap", ap.toFixed(3));
+    env.style.setProperty("--su", su.toFixed(3));
+    env.style.setProperty("--cu", cu.toFixed(3));
+    env.classList.toggle("oltre", ap > 0.5);
   }
+  var inCoda = false;
+  function programma() {
+    if (inCoda) return;
+    inCoda = true;
+    function fai() { if (!inCoda) return; inCoda = false; aggiornaLettera(); }
+    requestAnimationFrame(fai);
+    setTimeout(fai, 80); // riserva se rAF è sospeso (scheda in secondo piano)
+  }
+  window.addEventListener("scroll", programma, { passive: true });
+  window.addEventListener("resize", programma);
+  aggiornaLettera();
 
   /* ---------- petali (festa) ---------- */
   var colori = ["#edcdc4", "#e3b5aa", "#f4dcd5", "#d6a69b"];

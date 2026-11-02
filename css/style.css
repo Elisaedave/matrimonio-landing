@@ -90,20 +90,22 @@ a { color: inherit; }
   transform: translate(-50%, -52%); background: none; border: 0; padding: 1rem; cursor: pointer; font: inherit; color: inherit;
   -webkit-tap-highlight-color: transparent; transition: transform .6s cubic-bezier(.5, 0, .2, 1), opacity .45s ease;
 }
-.sigillo__svg { width: clamp(5.6rem, 24vw, 7.2rem); height: auto; filter: drop-shadow(0 10px 8px rgba(90, 40, 35, .35)); animation: pulsa 3.2s ease-in-out infinite; }
+.sigillo__svg { width: clamp(5.6rem, 24vw, 7.2rem); height: auto; filter: drop-shadow(0 10px 8px rgba(90, 40, 35, .35)); animation: pulsa 3.2s ease-in-out infinite; will-change: transform; }
 .sigillo__testo { font-family: var(--f-corsivo); font-size: clamp(1.8rem, 6.4vw, 2.3rem); line-height: 1.1; color: var(--rosa-profondo); }
 .sigillo:hover .sigillo__svg { transform: scale(1.05); }
 @keyframes pulsa { 50% { transform: scale(1.04); } }
 .busta.apre .sigillo { opacity: 0; transform: translate(-50%, -52%) scale(1.5); pointer-events: none; }
 
 /* ---------- 0b · la lettera che esce dalla busta (si apre quando arrivi qui) ---------- */
-.lettera { --w: min(76vw, 21rem); display: grid; justify-items: center; padding-top: clamp(3rem, 9vw, 5rem); padding-bottom: clamp(3rem, 9vw, 5rem); overflow: hidden; }
+/* La busta resta ferma al centro mentre scrolli: la lettera esce (o rientra) in base a quanto hai scrollato. */
+.lettera { --w: min(76vw, 21rem); height: 230svh; padding: 0; }
+.lettera .lettera__pin { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; overflow: hidden; }
+.env { --ap: 0; --su: 0; --cu: 0; }
 .env {
   position: relative; width: var(--w); height: calc(var(--w) * .68);
-  margin-top: calc(var(--w) * .8); perspective: 1400px; cursor: pointer;
+  margin-top: calc(var(--w) * .8); perspective: 1400px;
   filter: drop-shadow(0 24px 22px rgba(110, 70, 60, .2));
 }
-.env.aperta { cursor: default; }
 
 .env__retro, .env__fronte-forma, .env__aletta {
   background-color: #e6d3c3; background-image: var(--fibre), var(--grana); background-blend-mode: multiply;
@@ -121,24 +123,22 @@ a { color: inherit; }
 .env__aletta {
   position: absolute; left: 0; right: 0; top: 0; height: 55%; z-index: 4;
   clip-path: polygon(0 0, 100% 0, 50% 100%); background-color: #f1e3d5;
-  transform-origin: 50% 0; transition: transform .95s cubic-bezier(.5, 0, .2, 1), z-index 0s linear .45s;
+  transform-origin: 50% 0; transform: rotateX(calc(var(--ap) * 180deg));
 }
-.env.aperta .env__aletta { transform: rotateX(180deg); z-index: 1; background-color: #e4d1c1; }
+.env.oltre .env__aletta { z-index: 1; background-color: #e4d1c1; }
 
 /* La guida ritaglia tutto ciò che scende sotto il bordo della busta, ma lascia uscire la lettera verso l'alto. */
 .env__guida { position: absolute; left: 0; right: 0; top: calc(var(--w) * -.95); height: calc(var(--w) * 1.63); overflow: hidden; z-index: 2; pointer-events: none; }
 .env__lettera {
   position: absolute; left: 6%; right: 6%; top: calc(var(--w) * .984); height: calc(var(--w) * .8);
   background: #fffdf9; border-radius: 2px; box-shadow: 0 6px 18px -8px rgba(110, 70, 60, .35);
-  transition: transform 1.2s cubic-bezier(.35, .1, .15, 1) .75s;
+  transform: translateY(calc(var(--w) * -.72 * var(--su)));
   font-size: calc(var(--w) * .047); line-height: 1.5;
 }
-.env.aperta .env__lettera { transform: translateY(calc(var(--w) * -.72)); }
 .env__testo { padding: 9% 9% 0; text-align: center; color: var(--testo); }
 .env__testo p + p { margin-top: .9em; }
 .env__saluto { font-family: var(--f-corsivo); font-size: 2.1em; line-height: 1.1; margin-bottom: .55em; }
-.env__cuori { position: absolute; left: 50%; top: calc(var(--w) * .04); width: 30%; transform: translateX(-50%); fill: none; stroke: var(--rosa-scuro); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity .8s ease 1.9s; }
-.env.aperta .env__cuori { opacity: 1; }
+.env__cuori { position: absolute; left: 50%; top: calc(var(--w) * .04); width: 30%; transform: translateX(-50%); fill: none; stroke: var(--rosa-scuro); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: var(--cu); }
 
 /* ---------- 1 · tag ---------- */
 .tag { min-height: 100svh; display: grid; place-items: center; padding: 4.5rem 1.25rem 3rem; overflow: hidden; }
