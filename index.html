@@ -239,10 +239,19 @@
       <form class="carta carta--larga modulo" id="modulo" novalidate>
         <p class="prova" id="prova" hidden>Modulo in prova: non è ancora collegato al foglio e le risposte non vengono salvate.</p>
 
-        <div class="campo">
-          <label for="nome">Nome e cognome</label>
-          <input id="nome" name="nome" type="text" autocomplete="name" required placeholder="Come ti chiami?">
-        </div>
+        <fieldset class="campo chi">
+          <legend>Chi risponde</legend>
+          <div class="coppia">
+            <div class="campo">
+              <label for="nome">Nome</label>
+              <input id="nome" name="nome" type="text" autocomplete="given-name" required>
+            </div>
+            <div class="campo">
+              <label for="cognome">Cognome</label>
+              <input id="cognome" name="cognome" type="text" autocomplete="family-name" required>
+            </div>
+          </div>
+        </fieldset>
 
         <fieldset class="campo scelta">
           <legend>La tua risposta</legend>
@@ -251,33 +260,15 @@
         </fieldset>
 
         <div id="dettagli" class="dettagli">
-          <div class="campo">
-            <label for="persone">Quante persone siete, te compreso?</label>
-            <select id="persone" name="persone">
-              <option>1</option><option>2</option><option>3</option>
-              <option>4</option><option>5</option><option>6</option>
-            </select>
+          <div class="persona persona--io" id="persona-io">
+            <p class="persona__titolo">Per te</p>
+            <div class="allergie-posto"></div>
           </div>
-          <div class="campo" id="campo-ospiti" hidden>
-            <label for="ospiti">Nomi di chi viene con te</label>
-            <textarea id="ospiti" name="ospiti" rows="2" placeholder="Nome e cognome, uno per riga"></textarea>
-          </div>
-          <fieldset class="campo allergeni">
-            <legend>Allergie e intolleranze alimentari</legend>
-            <p class="campo__aiuto">Tocca quelle che servono, per te e per chi viene con te. Se non ce ne sono, salta pure.</p>
-            <div class="chips">
-              <label class="chip"><input type="checkbox" name="allergeni" value="Glutine"><span>Glutine</span></label>
-              <label class="chip"><input type="checkbox" name="allergeni" value="Lattosio"><span>Lattosio</span></label>
-              <label class="chip"><input type="checkbox" name="allergeni" value="Frutta a guscio"><span>Frutta a guscio</span></label>
-              <label class="chip"><input type="checkbox" name="allergeni" value="Uova"><span>Uova</span></label>
-              <label class="chip"><input type="checkbox" name="allergeni" value="Pesce e crostacei"><span>Pesce e crostacei</span></label>
-              <label class="chip"><input type="checkbox" name="allergeni" value="Soia"><span>Soia</span></label>
-              <label class="chip"><input type="checkbox" name="allergeni" value="Vegetariano"><span>Vegetariano</span></label>
-              <label class="chip"><input type="checkbox" name="allergeni" value="Vegano"><span>Vegano</span></label>
-            </div>
-            <label class="campo__sotto" for="intolleranze">Altro, o chi ha quale esigenza</label>
-            <textarea id="intolleranze" name="intolleranze" rows="3" placeholder="Es. «Marco: celiaco». Scrivi qui qualsiasi altra allergia."></textarea>
-          </fieldset>
+
+          <div class="altri" id="altri"></div>
+          <p class="altri__aiuto">Vieni con qualcuno? Aggiungi una scheda per ognuno: ci serve il nome di tutti e le loro eventuali allergie.</p>
+          <button type="button" class="bottone bottone--chiaro aggiungi" id="aggiungi">+ Aggiungi un'altra persona</button>
+
           <div class="campo">
             <label for="canzone">Una canzone che ti fa ballare</label>
             <input id="canzone" name="canzone" type="text" placeholder="Titolo e artista">
@@ -290,6 +281,39 @@
         <p class="modulo__esito" id="esito" role="status" aria-live="polite"></p>
         <p class="modulo__privacy">Usiamo queste informazioni solo per organizzare il giorno del matrimonio. Le leggono soltanto Elisa e Davide.</p>
       </form>
+
+      <template id="tpl-allergie">
+        <fieldset class="campo allergeni">
+          <legend>Allergie e intolleranze alimentari</legend>
+          <p class="campo__aiuto">Tocca quelle che servono. Se non ce ne sono, salta pure.</p>
+          <div class="chips">
+            <label class="chip"><input type="checkbox" name="allergeni" value="Glutine"><span>Glutine</span></label>
+            <label class="chip"><input type="checkbox" name="allergeni" value="Lattosio"><span>Lattosio</span></label>
+            <label class="chip"><input type="checkbox" name="allergeni" value="Frutta a guscio"><span>Frutta a guscio</span></label>
+            <label class="chip"><input type="checkbox" name="allergeni" value="Uova"><span>Uova</span></label>
+            <label class="chip"><input type="checkbox" name="allergeni" value="Pesce e crostacei"><span>Pesce e crostacei</span></label>
+            <label class="chip"><input type="checkbox" name="allergeni" value="Soia"><span>Soia</span></label>
+            <label class="chip"><input type="checkbox" name="allergeni" value="Vegetariano"><span>Vegetariano</span></label>
+            <label class="chip"><input type="checkbox" name="allergeni" value="Vegano"><span>Vegano</span></label>
+            <label class="chip"><input type="checkbox" name="allergeni" value="Menu bambini"><span>Menu bambini</span></label>
+          </div>
+          <label class="campo__sotto">Altro<input class="altro" type="text" placeholder="Qualsiasi altra allergia o esigenza"></label>
+        </fieldset>
+      </template>
+
+      <template id="tpl-persona">
+        <div class="persona">
+          <div class="persona__testa">
+            <p class="persona__titolo">Persona</p>
+            <button type="button" class="link link--bottone persona__togli">Togli</button>
+          </div>
+          <div class="coppia">
+            <div class="campo"><label>Nome<input class="p-nome" type="text" autocomplete="off"></label></div>
+            <div class="campo"><label>Cognome<input class="p-cognome" type="text" autocomplete="off"></label></div>
+          </div>
+          <div class="allergie-posto"></div>
+        </div>
+      </template>
     </section>
 
     <!-- 7 · ALBUM (compare dopo il matrimonio) -->

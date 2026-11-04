@@ -1,6 +1,7 @@
 # Collegare il modulo RSVP al foglio Google
 
-Una volta sola, circa 5 minuti. Le risposte arrivano nel foglio, in una scheda chiamata "Risposte".
+Una volta sola, circa 5 minuti. Le risposte arrivano nel foglio, in una scheda chiamata "Risposte": **una riga per persona**.
+Una famiglia con tre persone produce tre righe con lo stesso valore nella colonna "Gruppo" (e lo stesso "Chi ha risposto").
 
 1. Apri il foglio Google dove vuoi ricevere le risposte.
 2. Menu **Estensioni → Apps Script**.

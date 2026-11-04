@@ -1,10 +1,13 @@
 /**
- * Riceve le risposte del modulo RSVP e le scrive nel foglio Google.
+ * Riceve le risposte del modulo RSVP e le scrive nel foglio Google: UNA RIGA PER PERSONA.
  * Va incollato in Estensioni > Apps Script dal foglio stesso (script "collegato").
  * Istruzioni passo per passo: apps-script/README.md
  */
 var NOME_FOGLIO = "Risposte";
-var INTESTAZIONI = ["Data invio", "Nome e cognome", "Presenza", "Persone", "Altri ospiti", "Intolleranze o allergie", "Canzone per ballare"];
+var INTESTAZIONI = [
+  "Data invio", "Chi ha risposto", "Nome", "Cognome", "Presenza",
+  "Allergie e intolleranze", "Canzone per ballare", "Gruppo"
+];
 
 function doPost(e) {
   var lock = LockService.getScriptLock();
@@ -18,16 +21,24 @@ function doPost(e) {
       foglio.getRange(1, 1, 1, INTESTAZIONI.length).setFontWeight("bold");
       foglio.setFrozenRows(1);
     }
-    foglio.appendRow([
-      Utilities.formatDate(new Date(), "Europe/Rome", "yyyy-MM-dd HH:mm:ss"),
-      testo(d.nome),
-      testo(d.presenza),
-      testo(d.persone),
-      testo(d.ospiti),
-      testo(d.intolleranze),
-      testo(d.canzone),
-    ]);
-    return risposta({ ok: true });
+    var quando = Utilities.formatDate(new Date(), "Europe/Rome", "yyyy-MM-dd HH:mm:ss");
+    var persone = (d.persone || []).slice(0, 12); // massimo ragionevole per un invio
+    var righe = persone.map(function (p, i) {
+      return [
+        quando,
+        testo(d.chiHaRisposto),
+        testo(p.nome),
+        testo(p.cognome),
+        testo(d.presenza),
+        testo(p.allergie),
+        i === 0 ? testo(d.canzone) : "", // la canzone una volta sola per gruppo
+        testo(d.gruppo),
+      ];
+    });
+    if (righe.length) {
+      foglio.getRange(foglio.getLastRow() + 1, 1, righe.length, INTESTAZIONI.length).setValues(righe);
+    }
+    return risposta({ ok: true, righe: righe.length });
   } catch (err) {
     return risposta({ ok: false, errore: String(err) });
   } finally {

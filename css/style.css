@@ -320,7 +320,7 @@ body.aperto .tag__calla { animation: cresce 1.6s cubic-bezier(.2,.8,.2,1) .9s fo
 
 
 /* allergie e intolleranze: scelte rapide */
-.allergeni { margin-top: 2.2rem; }
+.allergeni { margin-top: 1.4rem; }
 .allergeni legend { margin-bottom: .2rem; }
 .campo__aiuto { font-size: .9rem; color: var(--testo-2); margin-bottom: .8rem; }
 .chips { display: flex; flex-wrap: wrap; gap: .5rem; }
@@ -333,6 +333,28 @@ body.aperto .tag__calla { animation: cresce 1.6s cubic-bezier(.2,.8,.2,1) .9s fo
 .chip input:checked + span { background: var(--rosa-profondo); border-color: var(--rosa-profondo); color: #fffaf5; }
 .chip input:focus-visible + span { outline: 2px solid var(--rosa-profondo); outline-offset: 3px; }
 .campo .campo__sotto { margin-top: 1.1rem; }
+
+
+/* nome e cognome affiancati, schede persona */
+.coppia { display: grid; gap: 1.2rem; }
+@media (min-width: 560px) { .coppia { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+.campo label input { margin-top: .5rem; }
+.chi legend { margin-bottom: .6rem; }
+.persona { margin-top: 1.6rem; padding: 1.2rem 1.1rem 1.3rem; background: rgba(255, 253, 249, .55); border: 1.5px solid var(--rosa); border-radius: 12px; }
+.persona--io { margin-top: 0; }
+.persona__testa { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: .9rem; }
+.persona__titolo { font-family: var(--f-corsivo); font-size: 1.7rem; line-height: 1.1; color: var(--rosa-profondo); }
+.persona--io .persona__titolo { margin-bottom: .3rem; }
+.persona__togli { font-size: .9rem; color: var(--testo-2); }
+.persona .campo { margin-top: 0; }
+.persona .allergeni { margin-top: 1.2rem; }
+.persona .campo__sotto input { margin-top: .4rem; }
+.altri__aiuto { margin: 1.6rem 0 .8rem; font-size: .92rem; color: var(--testo-2); }
+.aggiungi { width: 100%; padding: .85rem 1.2rem; font-size: 1rem; border-style: dashed; }
+.aggiungi[disabled] { opacity: .5; cursor: default; }
+.persona.nuova { animation: entra .45s ease; }
+.persona.errore input.p-nome:placeholder-shown, .persona.errore input.p-cognome:placeholder-shown { border-color: #b4483a; }
+.campo input.errore { border-color: #b4483a; }
 
 .dettagli[hidden], [hidden] { display: none !important; }
 .dettagli { animation: entra .5s ease; }

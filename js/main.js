@@ -139,28 +139,49 @@
     daRivelare.forEach(function (el) { el.classList.add("visibile"); });
   }
 
-  /* ---------- modulo RSVP ---------- */
+  /* ---------- modulo RSVP: una scheda per persona ---------- */
+  var MAX_ALTRI = 9;
   var form = $("#modulo");
   var dettagliBox = $("#dettagli");
-  var campoOspiti = $("#campo-ospiti");
+  var altri = $("#altri");
+  var aggiungi = $("#aggiungi");
   var esito = $("#esito");
   var invia = $("#invia");
 
   if (!C.rsvpEndpoint) $("#prova").hidden = false;
+
+  function nuovoBloccoAllergie() { return document.importNode($("#tpl-allergie").content, true); }
+
+  // Scheda "Per te": solo le allergie (nome e cognome sono già in cima).
+  $("#persona-io .allergie-posto").appendChild(nuovoBloccoAllergie());
+
+  function rinumera() {
+    $$(".persona:not(.persona--io)", altri).forEach(function (card, i) {
+      $(".persona__titolo", card).textContent = "Persona " + (i + 2);
+    });
+    aggiungi.disabled = $$(".persona", altri).length >= MAX_ALTRI;
+  }
+
+  aggiungi.addEventListener("click", function () {
+    var card = document.importNode($("#tpl-persona").content, true).firstElementChild;
+    $(".allergie-posto", card).appendChild(nuovoBloccoAllergie());
+    card.classList.add("nuova");
+    $(".persona__togli", card).addEventListener("click", function () { card.remove(); rinumera(); });
+    altri.appendChild(card);
+    rinumera();
+    $(".p-nome", card).focus({ preventScroll: false });
+  });
 
   $$('input[name="presenza"]').forEach(function (r) {
     r.addEventListener("change", function () {
       dettagliBox.hidden = form.presenza.value === "no"; // i dettagli si vedono finché non rispondi di no
     });
   });
-  $("#persone").addEventListener("change", function () {
-    campoOspiti.hidden = parseInt(this.value, 10) < 2;
-  });
 
   // Scelte rapide + testo libero in un'unica cella del foglio.
-  function intolleranze() {
-    var scelte = $$('input[name="allergeni"]:checked', form).map(function (i) { return i.value; });
-    var altro = form.intolleranze.value.trim();
+  function allergie(radice) {
+    var scelte = $$('input[name="allergeni"]:checked', radice).map(function (i) { return i.value; });
+    var altro = $(".altro", radice).value.trim();
     return scelte.concat(altro ? [altro] : []).join(" · ");
   }
 
@@ -169,23 +190,56 @@
     esito.className = "modulo__esito " + (tipo || "");
   }
 
+  function pulisciErrori() {
+    $$(".errore", form).forEach(function (e) { e.classList.remove("errore"); });
+  }
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     messaggio("");
+    pulisciErrori();
     var nome = form.nome.value.trim();
+    var cognome = form.cognome.value.trim();
     var presenza = form.presenza.value;
-    $(".campo", form).classList.toggle("errore", !nome);
-    if (!nome) { messaggio("Scrivi il tuo nome e cognome.", "ko"); form.nome.focus(); return; }
+
+    if (!nome || !cognome) {
+      if (!nome) form.nome.classList.add("errore");
+      if (!cognome) form.cognome.classList.add("errore");
+      messaggio("Scrivi il tuo nome e il tuo cognome.", "ko");
+      (nome ? form.cognome : form.nome).focus();
+      return;
+    }
     if (!presenza) { messaggio("Dicci se ci sarai.", "ko"); return; }
     if (form.sito_web.value) return; // trappola anti-bot
 
     var si = presenza === "si";
+    var persone = [{ nome: nome, cognome: cognome, allergie: si ? allergie($("#persona-io")) : "" }];
+
+    if (si) {
+      var mancano = false;
+      $$(".persona", altri).forEach(function (card) {
+        var n = $(".p-nome", card), c = $(".p-cognome", card);
+        var vuota = !n.value.trim() && !c.value.trim() && !allergie(card);
+        if (vuota) { card.remove(); return; } // scheda aperta per sbaglio e lasciata vuota
+        [n, c].forEach(function (campo) {
+          campo.classList.toggle("errore", !campo.value.trim());
+          if (!campo.value.trim()) mancano = true;
+        });
+        persone.push({ nome: n.value.trim(), cognome: c.value.trim(), allergie: allergie(card) });
+      });
+      rinumera();
+      if (mancano) {
+        messaggio("Per ogni persona che aggiungi servono nome e cognome.", "ko");
+        var primo = $(".errore", form); if (primo) primo.focus();
+        return;
+      }
+    }
+
     var dati = {
-      nome: nome,
+      gruppo: Date.now().toString(36) + Math.random().toString(36).slice(2, 5),
+      chiHaRisposto: nome + " " + cognome,
       presenza: si ? "Sì" : "No",
-      persone: si ? form.persone.value : "0",
-      ospiti: si && parseInt(form.persone.value, 10) > 1 ? form.ospiti.value.trim() : "",
-      intolleranze: si ? intolleranze() : "",
+      persone: persone,
       canzone: si ? form.canzone.value.trim() : "",
     };
 
@@ -203,12 +257,15 @@
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(dati),
     }).then(function () {
+      var quanti = persone.length;
       form.reset();
+      altri.innerHTML = "";
+      rinumera();
+      $$('input[name="allergeni"]', form).forEach(function (i) { i.checked = false; });
       dettagliBox.hidden = false;
-      campoOspiti.hidden = true;
-      messaggio(si ? "Grazie! Ti aspettiamo il 28 maggio." : "Ci mancherai. Grazie di avercelo detto.", "ok");
+      messaggio(si ? (quanti > 1 ? "Grazie! Vi aspettiamo il 28 maggio." : "Grazie! Ti aspettiamo il 28 maggio.") : "Ci mancherai. Grazie di avercelo detto.", "ok");
       if (si) window.petali(40);
-      setTimeout(function () { invia.disabled = false; }, 4000); // per chi risponde anche per un altro invitato
+      setTimeout(function () { invia.disabled = false; }, 4000); // per chi risponde anche per un altro gruppo
     }).catch(function () {
       invia.disabled = false;
       messaggio("Non siamo riusciti a inviare la risposta. Riprova tra poco.", "ko");
