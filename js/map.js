@@ -13,8 +13,6 @@
   var ETICHETTE = { Milano: "sx", Singapore: "giu", Christchurch: "giu", Auckland: "dx", "Bora Bora": "su", Sydney: "sx" };
   var seguire = true; // la mappa scorre da sola dietro l'aereo, finché l'utente non la tocca
   var badge = document.getElementById("mappa-badge");
-  var lista = document.getElementById("tappe");
-  var rivedi = document.getElementById("rivedi");
 
   function el(nome, attr, padre) {
     var n = document.createElementNS(NS, nome);
@@ -68,16 +66,6 @@
     return d;
   });
 
-  var voci = M.citta.map(function (c, i) {
-    var ritorno = i === M.citta.length - 1;
-    var li = document.createElement("li");
-    li.innerHTML =
-      '<span class="n">' + (ritorno ? "♥" : i + 1) + "</span><span><strong>" +
-      (ritorno ? "Ritorno a " + c.nome : c.nome) + "</strong><small>" + (ritorno ? "A casa, sposi" : c.paese) + "</small></span>";
-    lista.appendChild(li);
-    return li;
-  });
-
   /* ---- animazione ---- */
   var corsa = 0; // identifica la corsa in corso, così "Rivedi" annulla la precedente
 
@@ -85,7 +73,6 @@
     corsa++;
     volati.forEach(function (p) { p.style.strokeDashoffset = p._L; });
     punti.forEach(function (p) { p.classList.remove("raggiunto"); p.style.transform = p.dataset.base; });
-    voci.forEach(function (v) { v.classList.remove("raggiunta"); });
     aereo.classList.remove("attivo");
   }
 
@@ -93,13 +80,11 @@
     corsa++;
     volati.forEach(function (p) { p.style.strokeDashoffset = 0; });
     punti.forEach(function (p) { p.classList.add("raggiunto"); });
-    voci.forEach(function (v) { v.classList.add("raggiunta"); });
     aereo.classList.remove("attivo");
   }
 
   function raggiungi(i) {
     punti[i].classList.add("raggiunto");
-    voci[i].classList.add("raggiunta");
   }
 
   function attesa(ms, id) {
@@ -178,7 +163,6 @@
     aereo.classList.remove("attivo");
   }
 
-  rivedi.addEventListener("click", parti);
   window.addEventListener("resize", scalaAereo);
   scalaAereo();
 
